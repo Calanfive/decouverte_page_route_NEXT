@@ -1,40 +1,87 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Le blog du devops
 
-## Getting Started
-
-First, run the development server:
+## Présentation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npx create-next-app@latest --typescript
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Options lors de l'installation :
+- Default 
+- Mais pas dans le dossier src
+- Ni App router
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Pourquoi utiliser le pages router de NextJS ?
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Par rapport au router vu lors du dernier TP sur Next (app router),
+le système de création des pages d'API et des pages web est presque équivalent (légèrement plus simple).
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Les pages d'API sont dans le dossier `pages/api` et les pages web dans `pages` directement.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Si on créee un fichier `pages/api/hello.ts` avec le contenu suivant :
+alors la route `/api/hello` sera disponible.
+Mais elle l'est aussi si on crée un dossier `pages/api/hello` avec un fichier `index.ts` dedans.
 
-## Learn More
+Si on créee un fichier `pages/hello.tsx` avec le contenu suivant :
+alors la route `/hello` sera disponible.
+Mais elle l'est aussi si on crée un dossier `pages/hello` avec un fichier `index.tsx` dedans.
 
-To learn more about Next.js, take a look at the following resources:
+Mais ce qui va changer, c'est surtout la gestion des routes :
+- rendues côté serveur (SSR)
+- rendues côté client (CSR / SPA)
+- rendues côté serveur et client (SSG)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+ATTENTION : Utiliser bien la documentation de NextJS avec le Pages Router (couleur violette) et non celle de l'App Router (couleur bleu)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Tester les différentes méthodes de rendu
 
-## Deploy on Vercel
+Modifier le fichier `pages/index.tsx`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Essayer d'afficher l'heure actuelle grâce au trois méthodes de rendu :
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+SSR vs SSG :
+
+getServerSideProps
+getStaticProps
+
+CSR :
+
+Utiliser un useState et useEffect pour mettre à jour l'heure toutes les secondes.
+
+## Créer une page d'API
+
+Modifier la route d'api par défaut `pages/api/date/index.ts`
+
+Créer une route `/api/date` qui retourne un json avec la date actuelle du serveur.
+
+Utiliser cette route dans le composant `pages/index.tsx` pour afficher la date en SSR, CSR et SSG.
+
+## Ajouter l'authentification
+
+Pour cela nous allons utiliser le package `next-auth` qui permet de gérer l'authentification avec de nombreux fournisseurs (Google, Facebook, Github, etc...).
+
+Notre objectif est d'utiliser l'authentification avec Github.
+
+Installez le package `next-auth`.
+
+Puis suivez la documentation pour mettre en place l'authentification avec Github :
+
+https://next-auth.js.org/configuration/providers/oauth
+https://next-auth.js.org/getting-started/rest-api
+https://next-auth.js.org/getting-started/client
+
+Questions :
+Dans le navigateur, sur quelle route puis-je me connecter avec Github ?
+Côté server, comment puis-je récupérer les informations de l'utilisateur connecté ?
+Côté client, comment puis-je récupérer les informations de l'utilisateur connecté ?
+
+## Créer une route d'api avec paramètre dans l'url
+
+Créer une route `/api/hello/[name].ts` qui retourne un json en `message` : bonjour + le nom passé en paramètre dans l'url.
+
+Vous avez cette fois ci accès à l'objet `req` de la requête.
+On y accède via req.query....
+
+Tester la requête avec RestClient.
+
+Rajoutez la prise en compte d'un paramètre `trueName` dans le body de la requête. S'il est présent, il prend le dessus sur le paramètre dans l'url.s
