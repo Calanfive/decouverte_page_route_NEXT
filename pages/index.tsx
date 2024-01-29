@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 // }
 
 export const getStaticProps = async () => {
-  const res = await fetch(`http://localhost:3002/api/date`)
+  const res = await fetch(`http://localhost:3000/api/date`)
   const data = await res.json()
   return { props: { dateStringSSG: data.date } }
 }
@@ -23,7 +23,7 @@ export default function Home(props : HomeProps) {
 
   useEffect(() => {
     setInterval(async () => {
-      const res = await fetch(`http://localhost:3002/api/date`)
+      const res = await fetch(`http://localhost:3000/api/date`)
       const data = await res.json()
       setDate(new Date())
     }, 1000)
