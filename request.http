@@ -3,3 +3,5 @@ GET http://localhost:3000/api/date
 
 GET http://localhost:3000/api/auth/signin
 ###
+
+GET http://localhost:3000/api/hello/cam
