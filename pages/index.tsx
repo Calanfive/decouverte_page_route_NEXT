@@ -22,7 +22,9 @@ export default function Home(props : HomeProps) {
   const [date, setDate] = useState<Date | null>(null)
 
   useEffect(() => {
-    setInterval(() => {
+    setInterval(async () => {
+      const res = await fetch(`http://localhost:3002/api/date`)
+      const data = await res.json()
       setDate(new Date())
     }, 1000)
   }, [])
