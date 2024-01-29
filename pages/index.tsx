@@ -23,6 +23,9 @@ export default function Home(props : HomeProps) {
   const [date, setDate] = useState<Date | null>(null)
   const { data: session, status } = useSession();
 
+  console.log(session, status);
+  
+
   useEffect(() => {
     setInterval(async () => {
       const res = await fetch(`http://localhost:3000/api/date`)
