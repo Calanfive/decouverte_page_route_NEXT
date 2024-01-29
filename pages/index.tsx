@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
@@ -20,6 +21,7 @@ interface HomeProps {
 
 export default function Home(props : HomeProps) {
   const [date, setDate] = useState<Date | null>(null)
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     setInterval(async () => {
